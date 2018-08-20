@@ -15,7 +15,7 @@ namespace TPBAPI.webui
             get
             {
                 if (_db == null)
-                    _db = (new MongoClient("mongodb://qbserver:27017/?readPreference=primary")).GetDatabase("IMDB");
+                    _db = (new MongoClient("mongodb://127.0.0.1:27017/?readPreference=primary")).GetDatabase("IMDB");
 
                 return _db;
             }
