@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\TPBAPI\TPBAPI.csproj" />
+    <ProjectReference Include="..\TPBAPI.api\TPBAPI.api.csproj" />
   </ItemGroup>
 
   <ItemGroup>
