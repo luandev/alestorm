@@ -28,7 +28,7 @@ namespace TPBAPI.webui
         public void ConfigureServices(IServiceCollection services)
         {
             /* Hangfire */
-            services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
+            // services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -45,8 +45,8 @@ namespace TPBAPI.webui
         {
             
 
-            app.UseHangfireServer();
-            app.UseHangfireDashboard();
+            //app.UseHangfireServer();
+            //app.UseHangfireDashboard();
 
 
             RecurringJob.AddOrUpdate(nameof(Biz.IMDB.CreateDB), () => Biz.IMDB.CreateDB(), Cron.Daily);
