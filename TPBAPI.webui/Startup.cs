@@ -28,7 +28,7 @@ namespace TPBAPI.webui
         public void ConfigureServices(IServiceCollection services)
         {
             /* Hangfire */
-            services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017/?readPreference=primary", "Hangfire"));
+            services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
