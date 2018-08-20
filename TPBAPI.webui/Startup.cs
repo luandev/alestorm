@@ -49,7 +49,7 @@ namespace TPBAPI.webui
             //app.UseHangfireDashboard();
 
 
-            RecurringJob.AddOrUpdate(nameof(Biz.IMDB.CreateDB), () => Biz.IMDB.CreateDB(), Cron.Daily);
+            //RecurringJob.AddOrUpdate(nameof(Biz.IMDB.CreateDB), () => Biz.IMDB.CreateDB(), Cron.Daily);
 
             if (env.IsDevelopment())
             {
