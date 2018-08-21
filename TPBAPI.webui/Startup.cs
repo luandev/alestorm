@@ -29,7 +29,7 @@ namespace TPBAPI.webui
         {
 
             /* Hangfire */
-            services.AddHangfire(x => x.UseMongoStorage("meongodb://127.0.0.1:27017", "Hangfire"));
+            services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
