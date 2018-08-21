@@ -27,8 +27,9 @@ namespace TPBAPI.webui
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             /* Hangfire */
-            // services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
+            services.AddHangfire(x => x.UseMongoStorage("mongodb://127.0.0.1:27017", "Hangfire"));
 
             services.Configure<CookiePolicyOptions>(options =>
             {
@@ -43,10 +44,10 @@ namespace TPBAPI.webui
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
 
-            //app.UseHangfireServer();
-            //app.UseHangfireDashboard();
+
+            app.UseHangfireServer();
+            app.UseHangfireDashboard();
 
 
             //RecurringJob.AddOrUpdate(nameof(Biz.IMDB.CreateDB), () => Biz.IMDB.CreateDB(), Cron.Daily);
