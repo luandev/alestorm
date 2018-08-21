@@ -16,9 +16,9 @@ namespace TPBAPI.webui.Biz
     {
         public async static Task CreateDB()
         {
-            var _base = AppDomain.CurrentDomain.BaseDirectory + "downloads\\" + DateTime.Now.ToString("ddMMyy");
-            var actors = _base + "\\name.basics.tsv.gz";
-            var movies = _base + "\\title.akas.tsv.gz";
+            var _base = AppDomain.CurrentDomain.BaseDirectory + "downloads/" + DateTime.Now.ToString("ddMMyy");
+            var actors = _base + "/name.basics.tsv.gz";
+            var movies = _base + "/title.akas.tsv.gz";
 
             await Task.WhenAll(new Task[] {
                 Task.Run(async () => await getDownload<Movies>("https://datasets.imdbws.com/title.akas.tsv.gz", movies) ),
