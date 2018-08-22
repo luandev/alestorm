@@ -19,10 +19,15 @@ namespace TPBAPI.api
         }
 
 
-        public async Task<IEnumerable<PirateItem>> Search(string query, PirateCategory category)
+        public async Task<IEnumerable<PirateItem>> Search(string query, PirateCategory? category = null)
         {
             var htmlDoc = new HtmlDocument();
-            htmlDoc.LoadHtml(await getPage("/s/?q={query}&category={category}&page=0&orderby=99"));
+            if(category == null) {
+                htmlDoc.LoadHtml(await getPage("/s/?q={query}&page=0&orderby=99"));
+            }
+            else {
+                htmlDoc.LoadHtml(await getPage("/s/?q={query}&category={category}&page=0&orderby=99"));
+            }
 
             HtmlNode table = htmlDoc.DocumentNode.SelectSingleNode("//table[@id=\"searchResult\"]");
 

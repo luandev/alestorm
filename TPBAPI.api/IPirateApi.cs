@@ -5,6 +5,6 @@ namespace TPBAPI.api
 {
     public interface IPirateApi
     {
-        Task<IEnumerable<PirateItem>> Search(string query, PirateCategory category);
+        Task<IEnumerable<PirateItem>> Search(string query, PirateCategory? category);
     }
 }
