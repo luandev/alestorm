@@ -17,7 +17,7 @@ class Landing extends React.Component<LandingProps, {}> {
 	public render() {
 		return (
 			<div className="row oga-event-default">
-				{"Hi!"}
+				{"Hi! a"}
 			</div>
 		)
 	}

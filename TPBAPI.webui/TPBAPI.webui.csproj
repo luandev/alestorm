@@ -8,10 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\static\**" />
+    <Content Remove="wwwroot\static\**" />
+    <EmbeddedResource Remove="wwwroot\static\**" />
+    <None Remove="wwwroot\static\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\asset-manifest.json" />
+    <Content Remove="wwwroot\favicon.ico" />
+    <Content Remove="wwwroot\index.html" />
+    <Content Remove="wwwroot\manifest.json" />
+    <Content Remove="wwwroot\service-worker.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Hangfire" Version="1.6.20" />
     <PackageReference Include="Hangfire.Console" Version="1.4.1" />
     <PackageReference Include="Hangfire.Mongo" Version="0.5.10" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.4" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="Redouble.AspNet.Webpack" Version="2.3.0" />
     <PackageReference Include="System.Net.Torrent" Version="0.3.0" />
@@ -31,8 +47,12 @@
     </Reference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\" />
+  </ItemGroup>
+
   <!--<Target Name="DebugRunWebpack" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\dist') ">-->
-  <Target Name="DebugRunWebpack" BeforeTargets="Build" >
+  <Target Name="DebugRunWebpack" BeforeTargets="Build"  Condition=" '$(Configuration)' == 'Debug' And !Exists('wwwroot\static') ">
     <!-- Ensure Node.js is installed -->
     <Exec Command="node --version" ContinueOnError="true">
       <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
@@ -47,11 +67,18 @@
 
   </Target>
 
+  <Target Name="DebugRunWebpack" BeforeTargets="Build">
+   
+    <Message Importance="high" Text="Performing frontend build..." />
+    <Exec Command="webpack --config ./FrontConfig/webpack.config.dev.js" />
+
+  </Target>
+
   <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
     <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
     <Exec Command="npm install" />
     <!--<Exec Command="webpack -config webpack.config.vendor.js -env.prod" />-->
-    <Exec Command="webpack --env.prod" />
+    <Exec Command="npm run build" />
 
     <!-- Include the newly-built files in the publish output -->
     <ItemGroup>

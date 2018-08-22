@@ -37,14 +37,13 @@ namespace TPBAPI.webui
             });
 
 
-            /* Webpack */
+            ///* Webpack */
             services.AddWebpack(
-                configFile: "webpack.config.js",      // relative to project directory
-                publicPath: "dist/",                  // should match output.publicPath in your webpack config
-                webRoot: "./wwwroot",                 // relative to project directory
-                logLevel: WebpackLogLevel.Normal,     // None, ErrorsOnly, Minimal, Normal or Verbose
-                envParam: null                        // the 'env' param passed to webpack.config.js,
-                                                      // if not set the current environment name is passed
+                configFile: "FrontConfig/webpack.config.dev.js",    // relative to project directory
+                publicPath: "./",                                   // should match output.publicPath in your webpack config
+                webRoot: "./wwwroot",                               // relative to project directory
+                envParam: null                                      // the 'env' param passed to webpack.config.js,
+                                                                    // if not set the current environment name is passed
              );
 
             services.Configure<CookiePolicyOptions>(options => {
@@ -85,15 +84,24 @@ namespace TPBAPI.webui
 
             app.UseStaticFiles();
 
-            app.UseMvc(routes => {
-                routes.MapRoute(
-                    name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
-
-                routes.MapSpaFallbackRoute(
-                    name: "spa-fallback",
-                    defaults: new { controller = "Home", action = "Index" });
+            // here you can see we make sure it doesn't start with /api, if it does, it'll 404 within .NET if it can't be found
+            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder => {
+                builder.UseMvc(routes => {
+                    routes.MapSpaFallbackRoute(
+                        name: "spa-fallback",
+                        defaults: new { controller = "Home", action = "Index" });
+                });
             });
+
+            //app.UseMvc(routes => {
+            //    routes.MapRoute(
+            //        name: "default",
+            //        template: "{controller=Home}/{action=Index}/{id?}");
+
+            //    routes.MapSpaFallbackRoute(
+            //        name: "spa-fallback",
+            //        defaults: new { controller = "Home", action = "Index" });
+            //});
         }
     }
 }

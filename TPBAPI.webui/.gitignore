@@ -235,3 +235,12 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+build
+node_modules
+.vscode
+yarn-error.log
+yarn.lock
+*.log*
+wwwroot

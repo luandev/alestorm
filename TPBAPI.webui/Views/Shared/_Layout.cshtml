@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html>
+﻿<!doctype html>
+<html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <link rel="manifest" href="/manifest.json">
+    <link rel="shortcut icon" href="/favicon.ico">
     <title>@ViewData["Title"] - TPBAPI.webui</title>
-    <base href="~/" />
-
-    <link rel="stylesheet" href="~/dist/vendor.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/dist/site.css" asp-append-version="true" />
+    <title>oga - Baseball MLB</title>
+    <link href="@ViewData["StaticCSS"]" rel="stylesheet"> @*/static/css/main.2da6d1cd.css*@
 </head>
 <body>
     @RenderBody()
-
-    <script src="~/dist/vendor.js" asp-append-version="true"></script>
+    <noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div>
+    <script type="text/javascript" src="@ViewData["StaticJS"]"></script> @*/static/js/main.10940437.js*@
     @RenderSection("scripts", required: false)
 </body>
 </html>
