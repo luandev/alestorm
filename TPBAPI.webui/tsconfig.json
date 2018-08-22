@@ -1,51 +1,15 @@
-//{
-//  "compilerOptions": {
-//    "baseUrl": ".",
-//    "outDir": "build/dist",
-//    "module": "esnext",
-//    "target": "es5",
-//    "lib": [ "es6", "dom" ],
-//    "sourceMap": true,
-//    "allowJs": true,
-//    "jsx": "react",
-//    "moduleResolution": "node",
-//    "rootDir": "src",
-//    "forceConsistentCasingInFileNames": true,
-//    "noImplicitReturns": true,
-//    "noImplicitThis": true,
-//    "noImplicitAny": true,
-//    "strictNullChecks": false,
-//    "suppressImplicitAnyIndexErrors": true,
-//    "noUnusedLocals": true
-//  },
-//  "exclude": [
-//    "node_modules",
-//    "build",
-//    "scripts",
-//    "acceptance-tests",
-//    "webpack",
-//    "jest",
-//    "src/setupTests.ts"
-//  ]
-//}
-
-
 {
   "compilerOptions": {
     "baseUrl": ".",
-    "module": "es2015",
-    "moduleResolution": "node",
-    "target": "es5",
-    "jsx": "react",
-    "experimentalDecorators": true,
-    "sourceMap": true,
-    "skipDefaultLibCheck": true,
-    "strict": true,
-    "lib": [ "es6", "dom" ],
-    "types": [ "webpack-env" ],
     "outDir": "build/dist",
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["es6", "dom"],
+    "sourceMap": true,
     "allowJs": true,
-    "rootDir": ".",
+    "jsx": "react",
+    "moduleResolution": "node",
+    "rootDir": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -55,9 +19,13 @@
     "noUnusedLocals": true
   },
   "exclude": [
-    "bin",
-    "node_modules"
+    "node_modules",
+    "Views",
+    "FrontScripts",
+    "FrontConfig",
+    "acceptance-tests",
+    "webpack",
+    "jest",
+    "FrontSrc/setupTests.ts"
   ]
 }
-
-
