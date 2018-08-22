@@ -1,13 +1,13 @@
 import { fetch, addTask } from 'domain-task';
-import { Action, Reducer, ActionCreator } from 'redux';
-import { AppThunkAction } from './';
+import { Reducer } from 'redux';
+import { IAppThunkAction } from '.';
 
 // -----------------
 // STATE - This defines the type of data maintained in the Redux store.
 
-export interface WeatherForecastsState {
+export interface MovieStoreState {
     isLoading: boolean;
-    startDateIndex?: number;
+    MovieQuery?: string;
     forecasts: WeatherForecast[];
 }
 
@@ -22,37 +22,37 @@ export interface WeatherForecast {
 // ACTIONS - These are serializable (hence replayable) descriptions of state transitions.
 // They do not themselves have any side-effects; they just describe something that is going to happen.
 
-interface RequestWeatherForecastsAction {
+interface RequestMovieStoreAction {
     type: 'REQUEST_WEATHER_FORECASTS';
-    startDateIndex: number;
+    MovieQuery: string;
 }
 
-interface ReceiveWeatherForecastsAction {
+interface ReceiveMovieStoreAction {
     type: 'RECEIVE_WEATHER_FORECASTS';
-    startDateIndex: number;
+    MovieQuery: string;
     forecasts: WeatherForecast[];
 }
 
 // Declare a 'discriminated union' type. This guarantees that all references to 'type' properties contain one of the
 // declared type strings (and not any other arbitrary string).
-type KnownAction = RequestWeatherForecastsAction | ReceiveWeatherForecastsAction;
+type KnownAction = RequestMovieStoreAction | ReceiveMovieStoreAction;
 
 // ----------------
 // ACTION CREATORS - These are functions exposed to UI components that will trigger a state transition.
 // They don't directly mutate state, but they can have external side-effects (such as loading data).
 
 export const actionCreators = {
-    requestWeatherForecasts: (startDateIndex: number): AppThunkAction<KnownAction> => (dispatch, getState) => {
+    getMovie: (MovieQuery: string): IAppThunkAction<KnownAction> => (dispatch, getState) => {
         // Only load data if it's something we don't already have (and are not already loading)
-        if (startDateIndex !== getState().weatherForecasts.startDateIndex) {
-            let fetchTask = fetch(`api/SampleData/WeatherForecasts?startDateIndex=${ startDateIndex }`)
+        if (MovieQuery !== getState().movieStore.MovieQuery) {
+            let fetchTask = fetch(`api/SampleData/MovieStore?startDateIndex=${ MovieQuery }`)
                 .then(response => response.json() as Promise<WeatherForecast[]>)
                 .then(data => {
-                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', startDateIndex: startDateIndex, forecasts: data });
+                    dispatch({ type: 'RECEIVE_WEATHER_FORECASTS', MovieQuery: MovieQuery, forecasts: data });
                 });
 
             addTask(fetchTask); // Ensure server-side prerendering waits for this to complete
-            dispatch({ type: 'REQUEST_WEATHER_FORECASTS', startDateIndex: startDateIndex });
+            dispatch({ type: 'REQUEST_WEATHER_FORECASTS', MovieQuery: MovieQuery });
         }
     }
 };
@@ -60,31 +60,31 @@ export const actionCreators = {
 // ----------------
 // REDUCER - For a given state and action, returns the new state. To support time travel, this must not mutate the old state.
 
-const unloadedState: WeatherForecastsState = { forecasts: [], isLoading: false };
+const unloadedState: MovieStoreState = { forecasts: [], isLoading: false };
 
-export const reducer: Reducer<WeatherForecastsState> = (state: WeatherForecastsState, incomingAction: Action) => {
+export const reducer: Reducer<MovieStoreState, KnownAction> = (state: MovieStoreState | undefined, incomingAction: KnownAction) => {
     const action = incomingAction as KnownAction;
     switch (action.type) {
-        case 'REQUEST_WEATHER_FORECASTS':
-            return {
-                startDateIndex: action.startDateIndex,
-                forecasts: state.forecasts,
-                isLoading: true
-            };
-        case 'RECEIVE_WEATHER_FORECASTS':
-            // Only accept the incoming data if it matches the most recent request. This ensures we correctly
-            // handle out-of-order responses.
-            if (action.startDateIndex === state.startDateIndex) {
-                return {
-                    startDateIndex: action.startDateIndex,
-                    forecasts: action.forecasts,
-                    isLoading: false
-                };
-            }
-            break;
+        //case 'REQUEST_WEATHER_FORECASTS':
+        //    return {
+        //        MovieQuery: action.MovieQuery,
+        //        forecasts: state.forecasts,
+        //        isLoading: true
+        //    };
+        //case 'RECEIVE_WEATHER_FORECASTS':
+        //    // Only accept the incoming data if it matches the most recent request. This ensures we correctly
+        //    // handle out-of-order responses.
+        //    if (action.MovieQuery === state.MovieQuery) {
+        //        return {
+        //            MovieQuery: action.MovieQuery,
+        //            forecasts: action.forecasts,
+        //            isLoading: false
+        //        };
+        //    }
+        //    break;
         default:
             // The following line guarantees that every action in the KnownAction union has been covered by a case above
-            const exhaustiveCheck: never = action;
+            //const exhaustiveCheck: never = action;
     }
 
     return state || unloadedState;
