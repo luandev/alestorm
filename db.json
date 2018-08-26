@@ -1,4 +1,7 @@
 {
+    "profile": {
+        "name": "typicode"
+    },
     "movies": [{
             "id": 100,
             "title": "The Shawshank Redemption",
