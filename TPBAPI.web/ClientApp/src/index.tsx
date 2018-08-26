@@ -14,8 +14,9 @@ import { Provider } from 'react-redux';
 import '@blueprintjs/icons/lib/css/blueprint-icons.css';
 import '@blueprintjs/select/lib/css/blueprint-select.css';
 import '@blueprintjs/core/lib/css/blueprint.css';
+import 'emoji-mart/css/emoji-mart.css'
 import 'normalize.css/normalize.css';
-
+import './index.css';
 
 // Create browser history to use in the Redux store
 const baseUrl       = (document.getElementsByTagName('base')[0] || {} as HTMLBaseElement).href;

@@ -3,10 +3,25 @@ html {
 }
 
 body {
-  height: 100%;   
-  overflow: hidden;  /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
-  margin: 0px;  /*removes default style*/
-  display: flex;  /*enables flex content for its children*/
-  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  /*makes the body non-scrollable (we will add scrolling to the sidebar and main content containers)*/
+  margin: 0px;
+  /*removes default style*/
   font-family: sans-serif;
+  background: #26323c;
+}
+
+a:hover {
+  text-decoration: none;
+  opacity: 0.3;
+}
+
+* {
+  transition: all 0.2s ease-in,
+}
+
+.bp3-card {
+  padding: 5px;
+  margin: 5px;
 }

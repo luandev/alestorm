@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { IApplicationState } from 'src/store';
-import { RouteComponentProps, Link } from 'react-router-dom';
-import {  Button } from '@blueprintjs/core';
+import { RouteComponentProps } from 'react-router-dom';
+// import {  Button } from '@blueprintjs/core';
 import * as MovieStore from 'src/store/movie';
 import { actionCreators } from 'src/store/movie/';
 
@@ -22,16 +22,16 @@ class Movies extends React.Component<MoviesProps, {}> {
     public render() {
         this.props.Load();
 
-        const movies = this.props.movies.map((m, i) => 
-        <li key={i}>
-            <Link to={`/movie/${m.id}`}>
-                <Button icon="ninja" text="view" />
-            </Link>
-            {m.title}
-        </li>);
+        // const movies = this.props.movies.map((m, i) => 
+        // <li key={i}>
+        //     <Link to={`/movie/${m.id}`}>
+        //         <Button icon="ninja" text="view" />
+        //     </Link>
+        //     {m.title}
+        // </li>);
 
         return <ul>
-            {movies}
+            {"movies"}
         </ul>;
     }
 }

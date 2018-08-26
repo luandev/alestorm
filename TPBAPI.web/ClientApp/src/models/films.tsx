@@ -17,6 +17,21 @@ export interface IFilm {
     rank: number;
 }
 
+export async function getMovies(q: string): Promise<IFilm[]> {
+    return await api<IFilm[]>('v1/posts/1', {query: q})
+}
+
+
+async function api<T>(url: string, data: any): Promise<T> {
+    const request = await fetch(url);
+    if(request.ok) {
+         return (await request.json()) as T;
+    }
+    else {
+        throw new Error(request.statusText)
+    }
+}
+
 /** Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top */
 export const TOP_100_FILMS: IFilm[] = [
     { title: "The Shawshank Redemption", year: 1994 },
@@ -137,6 +152,9 @@ export const renderFilm: ItemRenderer<IFilm> = (film, { handleClick, modifiers, 
         />
     );
 };
+
+export const renderInputValue = (film: IFilm) => film.title;
+
 
 export const filterFilm: ItemPredicate<IFilm> = (query, film) => {
     return `${film.rank}. ${film.title.toLowerCase()} ${film.year}`.indexOf(query.toLowerCase()) >= 0;
