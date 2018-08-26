@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@blueprintjs/core": "^2.3.1",
+    "@blueprintjs/core": "^3.4.0",
+    "@blueprintjs/select": "^3.1.0",
     "@types/enzyme": "^3.1.10",
     "@types/jquery": "^3.3.4",
     "@types/react-hot-loader": "^4.1.0",
@@ -11,6 +12,7 @@
     "@types/react-router": "^4.0.25",
     "@types/react-router-dom": "^4.2.6",
     "@types/react-router-redux": "^5.0.15",
+    "@types/redux": "^3.6.0",
     "@types/signalr": "^2.2.35",
     "@types/uuid": "^3.4.3",
     "@types/webpack-env": "^1.13.6",
@@ -21,7 +23,7 @@
     "babel-loader": "^7.1.2",
     "babel-preset-react-app": "^3.1.1",
     "babel-runtime": "6.23.0",
-    "case-sensitive-paths-webpack-plugin": "2.1.1",
+    "case-sensitive-paths-webpack-plugin": "^2.1.2",
     "chalk": "1.1.3",
     "css-loader": "0.28.7",
     "dotenv": "4.0.0",
@@ -74,9 +76,9 @@
     "yarn": "^1.6.0"
   },
   "scripts": {
-    "start": "node FrontScripts/start.js",
-    "build": "node FrontScripts/build.js",
-    "test": "node FrontScripts/test.js --env=jsdom"
+    "start": "node scripts/start.js",
+    "build": "node scripts/build.js",
+    "test": "node scripts/test.js --env=jsdom"
   },
   "devDependencies": {
     "@types/enzyme-adapter-react-16": "^1.0.2",
@@ -86,15 +88,14 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "node-sass": "^4.9.0",
     "sass-loader": "^7.0.3",
-    "typescript": "^2.8.3",
-    "webpack-aspnet-middleware": "^2.3.0"
+    "typescript": "^2.8.3"
   },
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}"
     ],
     "setupFiles": [
-      "<rootDir>/FrontConfig/polyfills.js"
+      "<rootDir>/config/polyfills.js"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.(j|t)s?(x)",
@@ -104,9 +105,9 @@
     "testURL": "http://localhost",
     "transform": {
       "^.+\\.(js|jsx|mjs)$": "<rootDir>/node_modules/babel-jest",
-      "^.+\\.tsx?$": "<rootDir>/FrontConfig/jest/typescriptTransform.js",
-      "^.+\\.css$": "<rootDir>/FrontConfig/jest/cssTransform.js",
-      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/FrontConfig/jest/fileTransform.js"
+      "^.+\\.tsx?$": "<rootDir>/config/jest/typescriptTransform.js",
+      "^.+\\.css$": "<rootDir>/config/jest/cssTransform.js",
+      "^(?!.*\\.(js|jsx|mjs|css|json)$)": "<rootDir>/config/jest/fileTransform.js"
     },
     "transformIgnorePatterns": [
       "[/\\\\]node_modules[/\\\\].+\\.(js|jsx|mjs|ts|tsx)$"

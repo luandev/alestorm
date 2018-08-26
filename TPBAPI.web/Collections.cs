@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using MongoDB.Driver;
 using TPBAPI.web.Models;
 
-namespace TPBAPI.web
+namespace TPBAPI
 {
     public class Collections
     {

@@ -15,7 +15,7 @@ using MongoDB.Driver;
 using Redouble.AspNet.Webpack;
 using TPBAPI.api;
 
-namespace TPBAPI.webui
+namespace TPBAPI.web
 {
     public class Startup
     {

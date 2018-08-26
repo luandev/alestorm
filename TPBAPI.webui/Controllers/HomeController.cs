@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.IO;
 
-namespace TPBAPI.webui.Controllers
+namespace TPBAPI.web.Controllers
 {
     public class HomeController : Controller
     {
