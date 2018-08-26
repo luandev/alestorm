@@ -57,6 +57,9 @@ export interface IFilm {
     video: boolean;
     vote_average: number;
     vote_count: number;
+
+    isDownloading: boolean;
+    downloadProgress: number;
 }
 
 
@@ -69,7 +72,8 @@ export async function getMovies(q?: string): Promise<IFilm[]> {
 async function api<T>(url: string, data: any): Promise<T> {
     const request = await fetch(`${API}${url}`);
     if(request.ok) {
-         return (await request.json()) as T;
+        const response = await request.json();
+        return response as T;
     }
     else {
         throw new Error(request.statusText)
@@ -88,7 +92,7 @@ export const renderFilm: ItemRenderer<IFilm> = (film, { handleClick, modifiers, 
         <MenuItem
             active={modifiers.active}
             disabled={modifiers.disabled}
-            label={film.vote_average.toString()}
+            label={film.title}
             key={film.id}
             onClick={handleClick}
             text={highlightText(text, query)}
