@@ -17,18 +17,11 @@ class Movies extends React.Component<MoviesProps, {}> {
 
     constructor(props: MoviesProps) {
         super(props);
+        this.props.Load("");
     }
 
     public render() {
-        this.props.Load();
-
-        // const movies = this.props.movies.map((m, i) => 
-        // <li key={i}>
-        //     <Link to={`/movie/${m.id}`}>
-        //         <Button icon="ninja" text="view" />
-        //     </Link>
-        //     {m.title}
-        // </li>);
+        
 
         return <ul>
             {"movies"}

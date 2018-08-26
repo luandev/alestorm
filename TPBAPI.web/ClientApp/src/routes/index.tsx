@@ -9,9 +9,10 @@ import * as Search from 'src/components/search'
 
 export const routes = (
 	<Layout>
-		<Header/>
-		<Route path="*" component={Search.SearchBar} />
-		<Route exact={true} path="/" component={Movies.default} />
-		<Route path="/Movie/:id" component={Movie.default}  />
+		<Header>
+			<Route path="*" component={Search.default} />
+			<Route exact={true} path="/" component={Movies.default} />
+			<Route path="/Movie/:id" component={Movie.default} />
+		</Header>
 	</Layout>
 );

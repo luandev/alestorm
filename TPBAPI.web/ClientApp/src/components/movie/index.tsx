@@ -19,17 +19,18 @@ export class MovieView extends React.Component<MovieProps, {}> {
 
     constructor(props: MovieProps) {
         super(props);
+        this.props.Load("");
     }
 
     public render() {
-        this.props.Load();
+        
         const movie = this.props.movies.find(x => x.id === this.param_id())
         if (movie === undefined) {
             return this.renderNotFound(this.props.match.params.id);
         }
         return <h1 className="movie-tab" id="Tab">
-            {movie.id}
-            {this.props.movie}
+            {movie.title}
+            {this.props.searchQuery}
         </h1>;
     }
     private param_id(): any {

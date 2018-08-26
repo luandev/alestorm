@@ -3,27 +3,71 @@
  *
  * Licensed under the terms of the LICENSE file distributed with this project.
  */
-
+const API = "https://my-json-server.typicode.com/luandev/alestorm/";
 import { MenuItem } from "@blueprintjs/core";
 import { ItemPredicate, ItemRenderer } from "@blueprintjs/select";
 import * as React from "react";
 
-export interface IFilm {
-    /** Title of film. */
-    title: string;
-    /** Release year. */
-    year: number;
-    /** IMDb ranking. */
+
+export interface IGenre {
     id: number;
+    name: string;
 }
 
-export async function getMovies(q: string): Promise<IFilm[]> {
-    return await api<IFilm[]>('v1/posts/1', {query: q})
+export interface IProductionCompany {
+    id: number;
+    logo_path: string;
+    name: string;
+    origin_country: string;
+}
+
+export interface IProductionCountry {
+    iso_3166_1: string;
+    name: string;
+}
+
+export interface ISpokenLanguage {
+    iso_639_1: string;
+    name: string;
+}
+
+export interface IFilm {
+    adult: boolean;
+    backdrop_path: string;
+    belongs_to_collection?: any;
+    budget: number;
+    genres: IGenre[];
+    homepage: string;
+    id: number;
+    imdb_id: string;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    production_companies: IProductionCompany[];
+    production_countries: IProductionCountry[];
+    release_date: string;
+    revenue: number;
+    runtime: number;
+    spoken_languages: ISpokenLanguage[];
+    status: string;
+    tagline: string;
+    title: string;
+    video: boolean;
+    vote_average: number;
+    vote_count: number;
+}
+
+
+
+export async function getMovies(q?: string): Promise<IFilm[]> {
+    return await api<IFilm[]>('movies', {query: q})
 }
 
 
 async function api<T>(url: string, data: any): Promise<T> {
-    const request = await fetch(url);
+    const request = await fetch(`${API}${url}`);
     if(request.ok) {
          return (await request.json()) as T;
     }
@@ -33,7 +77,7 @@ async function api<T>(url: string, data: any): Promise<T> {
 }
 
 /** Top 100 films as rated by IMDb users. http://www.imdb.com/chart/top */
-export const TOP_100_FILMS: IFilm[] = [].map((m, index) => ({ ...m, rank: index + 1 }));
+// export const TOP_100_FILMS: IFilm[] = [].map((m, index) => ({ ...m, rank: index + 1 }));
 
 export const renderFilm: ItemRenderer<IFilm> = (film, { handleClick, modifiers, query }) => {
     if (!modifiers.matchesPredicate) {
@@ -44,7 +88,7 @@ export const renderFilm: ItemRenderer<IFilm> = (film, { handleClick, modifiers, 
         <MenuItem
             active={modifiers.active}
             disabled={modifiers.disabled}
-            label={film.year.toString()}
+            label={film.vote_average.toString()}
             key={film.id}
             onClick={handleClick}
             text={highlightText(text, query)}
@@ -56,7 +100,7 @@ export const renderInputValue = (film: IFilm) => film.title;
 
 
 export const filterFilm: ItemPredicate<IFilm> = (query, film) => {
-    return `${film.id}. ${film.title.toLowerCase()} ${film.year}`.indexOf(query.toLowerCase()) >= 0;
+    return `${film.id}. ${film.title.toLowerCase()} ${film.release_date}`.indexOf(query.toLowerCase()) >= 0;
 };
 
 function highlightText(text: string, query: string) {
@@ -94,8 +138,3 @@ function escapeRegExpChars(text: string) {
     return text.replace(/([.*+?^=!:${}()|\[\]\/\\])/g, "\\$1");
 }
 
-export const filmSelectProps = {
-    itemPredicate: filterFilm,
-    itemRenderer: renderFilm,
-    items: TOP_100_FILMS,
-};

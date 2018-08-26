@@ -23,5 +23,9 @@ a:hover {
 
 .bp3-card {
   padding: 5px;
+}
+
+main{
   margin: 5px;
+  margin-top:10px; 
 }
