@@ -151,14 +151,14 @@ export async function getMovies(q?: string): Promise<IFilm[]> {
     const formData = new FormData();
     formData.append('query', q);
 
-    return await api<IFilm[]>('http://localhost:52918/api/TMDB/', formData)
+    return await api<IFilm[]>('/api/TMDB/', formData)
 }
 
 export async function getMovie(id: number): Promise<IFullFilm> {
     const formData = new FormData();
     formData.append('id', id.toString());
 
-    return await api<IFullFilm>('http://localhost:52918/api/TMDB/get', formData)
+    return await api<IFullFilm>('/api/TMDB/get', formData)
 }
 
 async function api<T>(url: string, data: any): Promise<T> {

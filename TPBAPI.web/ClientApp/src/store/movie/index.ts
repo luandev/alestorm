@@ -12,7 +12,7 @@ type KnownAction = ILoad | IOpen | ILoadFull;
 /* State */
 export const actionCreators = {
     Load: (search: string): IAppThunkAction<KnownAction> => async (dispatch) => {
-        if(search.length > 3){
+        if(search.length > 3 || search === ""){
             const data = await Film.getMovies(search);
             dispatch({ type: 'LOAD', searchQuery: search, apiFilms: data });
         }else{
