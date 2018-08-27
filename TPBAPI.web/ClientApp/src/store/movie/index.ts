@@ -4,16 +4,23 @@ import * as Film from 'src/models/films';
 
 /* Actions */
 interface ILoad { type: 'LOAD', apiFilms: Film.IFilm[], searchQuery: string }
-interface IOpen { type: 'OPEN', movie: string }
-type KnownAction = ILoad | IOpen;
+interface ILoadFull { type: 'LOADMOVIE', apiFilms: Film.IFullFilm }
+interface IOpen { type: 'TOGGLESEARCH' }
+type KnownAction = ILoad | IOpen | ILoadFull;
 
 
 /* State */
 export const actionCreators = {
     Load: (search: string): IAppThunkAction<KnownAction> => async (dispatch) => {
         const data = await Film.getMovies(search);
-        dispatch({ type: 'LOAD', searchQuery:search, apiFilms:data  });
+        dispatch({ type: 'LOAD', searchQuery: search, apiFilms: data });
     },
+    LoadMovie: (mid: number): IAppThunkAction<KnownAction> => async (dispatch) => {
+        const data = await Film.getMovie(mid);
+        dispatch({ type: 'LOADMOVIE', apiFilms: data });
+    },
+    ToggleSearch: (): IAppThunkAction<KnownAction> => (dispatch) =>
+        dispatch({ type: 'TOGGLESEARCH' }),
 };
 
 
@@ -25,16 +32,25 @@ export const reducer: Reducer<IMovieStore> = (state: IMovieStore, action: KnownA
             DEFAULT.movies = action.apiFilms;
             DEFAULT.searchQuery = action.searchQuery;
             return DEFAULT;
+        case 'LOADMOVIE':
+            DEFAULT.movie = action.apiFilms;
+            return DEFAULT;
+        case 'TOGGLESEARCH':
+            DEFAULT.searchIsOpen = !state.searchIsOpen;
+            return DEFAULT;
     }
     return DEFAULT;
 };
 
 export interface IMovieStore {
     movies: Film.IFilm[];
+    movie: Film.IFullFilm;
     searchQuery?: string;
+    searchIsOpen: boolean;
 }
 
 export const DEFAULOBJ = {
-    movies: []
+    movies: [],
+    searchQuery: ""
 } as IMovieStore
 

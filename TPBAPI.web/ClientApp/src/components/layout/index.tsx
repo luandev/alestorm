@@ -7,10 +7,12 @@ export interface ILayoutProps {
 
 export class Layout extends React.Component<ILayoutProps, {}> {
 	public render() {
-		return( 
-		<div className="bp3-dark">
-			{this.props.children}
-		</div>
+		return (
+			<div className="bp3-dark">
+				<main>
+					{this.props.children}
+				</main>
+			</div>
 		);
 	}
 }

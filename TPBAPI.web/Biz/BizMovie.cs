@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using TMDbLib.Client;
+using TMDbLib.Objects.Movies;
 using TMDbLib.Objects.Search;
 using TPBAPI.api;
 
@@ -59,6 +60,25 @@ namespace TPBAPI.web.Biz
                 return search.Results;
             }
             catch(Exception ex) {
+                logger.LogInformation(nameof(search), ex);
+                throw;
+            }
+
+        }
+
+        public async Task<Movie> get(int id)
+        {
+            logger.LogInformation(nameof(search), $"Searching {id}");
+            try {
+                var db = await Collections.TMDBMovie.Find(x => x.Id == id).FirstOrDefaultAsync();
+                if (db != null)
+                    return db;
+
+                var movieAPi = await client.GetMovieAsync(id, MovieMethods.Videos | MovieMethods.Recommendations | MovieMethods.Similar);
+                await Collections.TMDBMovie.ReplaceOneAsync(x => x.Id == id, movieAPi, new UpdateOptions { IsUpsert = true });
+                return movieAPi;
+            }
+            catch (Exception ex) {
                 logger.LogInformation(nameof(search), ex);
                 throw;
             }

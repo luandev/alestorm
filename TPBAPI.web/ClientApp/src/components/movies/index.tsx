@@ -17,15 +17,23 @@ class Movies extends React.Component<MoviesProps, {}> {
 
     constructor(props: MoviesProps) {
         super(props);
-        this.props.Load("");
+
+        this.props.Load(this.props.searchQuery);
     }
 
     public render() {
-        
 
-        return <ul>
-            {"movies"}
-        </ul>;
+        return <div className="movies">
+            <div className="movies-list">
+                {this.props.movies && this.props.movies.map((x, i) =>
+                    <div key={i}
+                    onClick={(ev:any) => this.props.history.push(`/Movie/${x.id}`)}
+                    style={{ backgroundImage: `url(http://image.tmdb.org/t/p/w500/${x.poster_path})` }} 
+                    className={`thumb ${this.props.searchIsOpen ? "searching" : ""}`}>
+                        <div className="title">{x.title}</div>
+                    </div>)}
+            </div>
+        </div>
     }
 }
 

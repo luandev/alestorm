@@ -30,6 +30,10 @@ namespace TPBAPI.web.Controllers
         public async Task<IEnumerable<SearchMovie>> search(string query = null) =>
             await memoryCache.GetOrCreateAsync(nameof(search) + query, x => bizMovie.search(query));
 
+        [HttpPost("[action]")]
+        public async Task<Movie> get(int id) =>
+            await memoryCache.GetOrCreateAsync(nameof(get) + id, x => bizMovie.get(id));
+
 
         //[HttpGet("[action]")]
         //public async Task<Movie> getMovie(int id)

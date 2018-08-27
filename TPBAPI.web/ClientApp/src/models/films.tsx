@@ -31,6 +31,102 @@ export interface ISpokenLanguage {
     name: string;
 }
 
+export interface IFullFilm {
+    account_states?: any;
+    adult: boolean;
+    alternative_titles?: any;
+    backdrop_path: string;
+    belongs_to_collection?: any;
+    budget: number;
+    changes?: any;
+    credits?: any;
+    genres: IGenre[];
+    homepage?: any;
+    id: number;
+    images?: any;
+    imdb_id?: any;
+    keywords?: any;
+    lists?: any;
+    original_language: string;
+    original_title: string;
+    overview: string;
+    popularity: number;
+    poster_path: string;
+    production_companies: IProductionCompany[];
+    production_countries: IProductionCountry[];
+    release_date: Date;
+    release_dates?: any;
+    external_ids?: any;
+    releases?: any;
+    revenue: number;
+    reviews?: any;
+    runtime?: any;
+    similar: ISimilar;
+    recommendations: IRecommendations;
+    spoken_languages: ISpokenLanguage[];
+    status: string;
+    tagline: string;
+    title: string;
+    translations?: any;
+    video: boolean;
+    videos: IVideos;
+    vote_average: number;
+    vote_count: number;
+    isDownloading: boolean;
+    downloadProgress: number;
+}
+
+export interface IGenre {
+    id: number;
+    name: string;
+}
+
+export interface IProductionCompany {
+    id: number;
+    name: string;
+}
+
+export interface IProductionCountry {
+    iso_3166_1: string;
+    name: string;
+}
+
+export interface ISimilar {
+    page: number;
+    results: any[];
+    total_pages: number;
+    total_results: number;
+}
+
+export interface IRecommendations {
+    page: number;
+    results: any[];
+    total_pages: number;
+    total_results: number;
+}
+
+export interface ISpokenLanguage {
+    iso_639_1: string;
+    name: string;
+}
+
+export interface IResult {
+    id: string;
+    iso_3166_1: string;
+    iso_639_1: string;
+    key: string;
+    name: string;
+    site: string;
+    size: number;
+    type: string;
+}
+
+export interface IVideos {
+    id: number;
+    results: IResult[];
+}
+
+
 export interface IFilm {
     adult: boolean;
     original_title: string;
@@ -47,34 +143,6 @@ export interface IFilm {
     id: number;
     media_type: string;
     popularity: number;
-    // adult: boolean;
-    // backdrop_path: string;
-    // belongs_to_collection?: any;
-    // budget: number;
-    // genres: IGenre[];
-    // homepage: string;
-    // id: number;
-    // imdb_id: string;
-    // original_language: string;
-    // original_title: string;
-    // overview: string;
-    // popularity: number;
-    // poster_path: string;
-    // production_companies: IProductionCompany[];
-    // production_countries: IProductionCountry[];
-    // release_date: string;
-    // revenue: number;
-    // runtime: number;
-    // spoken_languages: ISpokenLanguage[];
-    // status: string;
-    // tagline: string;
-    // title: string;
-    // video: boolean;
-    // vote_average: number;
-    // vote_count: number;
-
-    isDownloading: boolean;
-    downloadProgress: number;
 }
 
 
@@ -86,6 +154,12 @@ export async function getMovies(q?: string): Promise<IFilm[]> {
     return await api<IFilm[]>('http://localhost:52918/api/TMDB/', formData)
 }
 
+export async function getMovie(id: number): Promise<IFullFilm> {
+    const formData = new FormData();
+    formData.append('id', id.toString());
+
+    return await api<IFullFilm>('http://localhost:52918/api/TMDB/get', formData)
+}
 
 async function api<T>(url: string, data: any): Promise<T> {
     try {

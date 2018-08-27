@@ -1,7 +1,7 @@
 
 import * as React from 'react';
 import { connect } from 'react-redux';
-import * as EventView from 'src/store/movie';
+import * as MovieStore from 'src/store/movie';
 import { IApplicationState } from 'src/store';
 import { RouteComponentProps } from 'react-router-dom';
 import * as moment from 'moment'
@@ -14,19 +14,19 @@ import { NonIdealState, Icon, ProgressBar, Intent, Button, ButtonGroup, Popover,
 
 
 type MovieProps =
-    & EventView.IMovieStore
-    & typeof EventView.actionCreators
+    & MovieStore.IMovieStore
+    & typeof MovieStore.actionCreators
     & RouteComponentProps<{ id: string }>;
 
 export class MovieView extends React.Component<MovieProps, {}> {
 
     constructor(props: MovieProps) {
         super(props);
-        this.props.Load("");
+        this.props.LoadMovie(this.param_id());
     }
 
     public render() {
-        const movie = this.props.movies.find(x => x.id === this.param_id())
+        const movie = this.props.movie;
         const menu = <Menu >
             <MenuItem text="480p" />
             <MenuItem text="720p" />
@@ -55,7 +55,7 @@ export class MovieView extends React.Component<MovieProps, {}> {
                     <div className="row">
                         <div><Icon iconSize={20} icon="chat" /> {movie.original_language}</div>
                         <div><Icon iconSize={20} icon="star" />{movie.vote_average}</div>
-                        <div><Icon iconSize={20} icon="inbox" />{movie.genre_ids.map(x => x).join(", ")}</div>
+                        <div><Icon iconSize={20} icon="inbox" />{movie.genres.map(x => x.name).join(", ")}</div>
                         <div><Icon iconSize={20} icon="user" />{movie.popularity}</div>
                     </div>
                 </div>
@@ -88,5 +88,5 @@ export class MovieView extends React.Component<MovieProps, {}> {
     }
 }
 
-const MovieViewComp = connect((state: IApplicationState) => state.movieStore, EventView.actionCreators)(MovieView);
+const MovieViewComp = connect((state: IApplicationState) => state.movieStore, MovieStore.actionCreators)(MovieView);
 export default MovieViewComp;
