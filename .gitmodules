@@ -1,0 +1,3 @@
+[submodule "TMDbLib"]
+	path = TMDbLib
+	url = https://github.com/LordMike/TMDbLib.git
