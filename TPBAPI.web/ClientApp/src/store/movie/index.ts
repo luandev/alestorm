@@ -12,8 +12,12 @@ type KnownAction = ILoad | IOpen | ILoadFull;
 /* State */
 export const actionCreators = {
     Load: (search: string): IAppThunkAction<KnownAction> => async (dispatch) => {
-        const data = await Film.getMovies(search);
-        dispatch({ type: 'LOAD', searchQuery: search, apiFilms: data });
+        if(search.length > 3){
+            const data = await Film.getMovies(search);
+            dispatch({ type: 'LOAD', searchQuery: search, apiFilms: data });
+        }else{
+            dispatch({ type: 'LOAD', searchQuery: search, apiFilms: null });
+        }
     },
     LoadMovie: (mid: number): IAppThunkAction<KnownAction> => async (dispatch) => {
         const data = await Film.getMovie(mid);
@@ -29,7 +33,9 @@ export const reducer: Reducer<IMovieStore> = (state: IMovieStore, action: KnownA
     const DEFAULT = Object.assign({}, state || DEFAULOBJ)
     switch (action.type) {
         case 'LOAD':
-            DEFAULT.movies = action.apiFilms;
+            if(action.apiFilms !== null) {
+                DEFAULT.movies = action.apiFilms;
+            }
             DEFAULT.searchQuery = action.searchQuery;
             return DEFAULT;
         case 'LOADMOVIE':

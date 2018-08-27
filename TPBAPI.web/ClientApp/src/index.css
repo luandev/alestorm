@@ -24,8 +24,12 @@ a:hover {
 .bp3-card {
   padding: 5px;
 }
-/* 
-main{
-  margin: 5px;
-  margin-top:10px; 
-} */
+
+@media only screen and (max-width: 600px) {
+  .bp3-omnibar {
+
+    left: calc(50% - 45vw) !important;
+    width: 90vw !important;
+  }
+}
+
