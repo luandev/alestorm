@@ -55,13 +55,13 @@ export class MovieView extends React.Component<MovieProps, {}> {
                     <div className="row">
                         <div><Icon iconSize={20} icon="chat" /> {movie.original_language}</div>
                         <div><Icon iconSize={20} icon="star" />{movie.vote_average}</div>
-                        <div><Icon iconSize={20} icon="inbox" />{movie.genres.map(x => x.name).join(", ")}</div>
+                        <div><Icon iconSize={20} icon="inbox" />{movie.genre_ids.map(x => x).join(", ")}</div>
                         <div><Icon iconSize={20} icon="user" />{movie.popularity}</div>
                     </div>
                 </div>
                 <div className="desc">
                     <h1 title={moment(movie.release_date).fromNow()} >{movie.title}</h1>
-                    <p>{moment(movie.release_date).format('YYYY')} - {movie.runtime} - {movie.status}</p>
+                    <p>{moment(movie.release_date).format('YYYY')} - {movie.adult ? "+18" : "All Ages"} </p>
                     <p>{movie.overview}</p>
                     {pirate}
                 </div>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
+using TMDbLib.Objects.Search;
 using TPBAPI.web.Models;
 
 namespace TPBAPI
@@ -23,6 +24,8 @@ namespace TPBAPI
 
         public static IMongoCollection<Actors> Actors { get => db.GetCollection<Actors>("name.basics"); }
         public static IMongoCollection<Movies> Movies { get => db.GetCollection<Movies>("title.akas"); }
+        public static IMongoCollection<SearchTerms> SearchTerms { get => db.GetCollection<SearchTerms>("TMDB.SearchTerms"); }
+        public static IMongoCollection<SearchMovie> SearchMovie { get => db.GetCollection<SearchMovie>("TMDB.SearchMovie"); }
     }
 }
 

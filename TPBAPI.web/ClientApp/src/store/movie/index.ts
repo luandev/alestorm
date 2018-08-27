@@ -22,7 +22,7 @@ export const reducer: Reducer<IMovieStore> = (state: IMovieStore, action: KnownA
     const DEFAULT = Object.assign({}, state || DEFAULOBJ)
     switch (action.type) {
         case 'LOAD':
-            DEFAULT.movies = action.apiFilms.filter(x => x.original_title.includes(action.searchQuery));
+            DEFAULT.movies = action.apiFilms;
             DEFAULT.searchQuery = action.searchQuery;
             return DEFAULT;
     }

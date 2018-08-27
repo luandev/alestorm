@@ -7,7 +7,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using TMDbLib.Client;
 using TPBAPI.api;
+using TPBAPI.web.Biz;
 
 namespace TPBAPI.web
 {
@@ -30,13 +32,14 @@ namespace TPBAPI.web
                 x.UseConsole();
             });
 
+            services.AddCors();
+            services.AddMemoryCache();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddSingleton<IPirateApi, PirateApi>();
-
+            services.AddSingleton<IBizMovie, BizMovie>();
 
             // In production, the React files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
+            services.AddSpaStaticFiles(configuration => {
                 configuration.RootPath = "ClientApp/build";
             });
         }
@@ -47,38 +50,37 @@ namespace TPBAPI.web
 
             app.UseHangfireServer();
             app.UseHangfireDashboard();
-            RecurringJob.AddOrUpdate(nameof(Biz.IMDB.CreateDB), () => Biz.IMDB.CreateDB(null), Cron.Daily);
+            RecurringJob.AddOrUpdate(nameof(Biz.BizIMDB.CreateDB), () => Biz.BizIMDB.CreateDB(null), Cron.Daily);
 
 
 
-            if (env.IsDevelopment())
-            {
+            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
+            else {
                 app.UseExceptionHandler("/Error");
             }
 
             app.UseStaticFiles();
             app.UseSpaStaticFiles();
 
-            app.UseMvc(routes =>
-            {
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
+            app.UseMvc(routes => {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                spa.Options.SourcePath = "ClientApp";
+            app.MapWhen(x => !x.Request.Path.Value.StartsWith("/api"), builder => {
+                builder.UseSpa(spa => {
+                    spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseReactDevelopmentServer(npmScript: "start");
-                    //spa.UseProxyToSpaDevelopmentServer("http://localhost:3000");
-                }
+                    if (env.IsDevelopment())
+                        spa.UseReactDevelopmentServer(npmScript: "start");
+
+                });
+
             });
         }
     }

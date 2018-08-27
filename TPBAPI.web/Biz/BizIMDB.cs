@@ -17,7 +17,7 @@ using TPBAPI.web.Models;
 
 namespace TPBAPI.web.Biz
 {
-    public class IMDB
+    public class BizIMDB
     {
         public async static Task CreateDB(PerformContext context)
         {

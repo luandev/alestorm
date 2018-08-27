@@ -3,7 +3,7 @@
  *
  * Licensed under the terms of the LICENSE file distributed with this project.
  */
-const API = "https://my-json-server.typicode.com/luandev/alestorm/";
+// const API = "https://my-json-server.typicode.com/luandev/alestorm/";
 import { MenuItem } from "@blueprintjs/core";
 import { ItemPredicate, ItemRenderer } from "@blueprintjs/select";
 import * as React from "react";
@@ -33,30 +33,45 @@ export interface ISpokenLanguage {
 
 export interface IFilm {
     adult: boolean;
-    backdrop_path: string;
-    belongs_to_collection?: any;
-    budget: number;
-    genres: IGenre[];
-    homepage: string;
-    id: number;
-    imdb_id: string;
-    original_language: string;
     original_title: string;
-    overview: string;
-    popularity: number;
-    poster_path: string;
-    production_companies: IProductionCompany[];
-    production_countries: IProductionCountry[];
-    release_date: string;
-    revenue: number;
-    runtime: number;
-    spoken_languages: ISpokenLanguage[];
-    status: string;
-    tagline: string;
+    release_date?: Date;
     title: string;
     video: boolean;
+    backdrop_path: string;
+    genre_ids: number[];
+    original_language: string;
+    overview: string;
+    poster_path: string;
     vote_average: number;
     vote_count: number;
+    id: number;
+    media_type: string;
+    popularity: number;
+    // adult: boolean;
+    // backdrop_path: string;
+    // belongs_to_collection?: any;
+    // budget: number;
+    // genres: IGenre[];
+    // homepage: string;
+    // id: number;
+    // imdb_id: string;
+    // original_language: string;
+    // original_title: string;
+    // overview: string;
+    // popularity: number;
+    // poster_path: string;
+    // production_companies: IProductionCompany[];
+    // production_countries: IProductionCountry[];
+    // release_date: string;
+    // revenue: number;
+    // runtime: number;
+    // spoken_languages: ISpokenLanguage[];
+    // status: string;
+    // tagline: string;
+    // title: string;
+    // video: boolean;
+    // vote_average: number;
+    // vote_count: number;
 
     isDownloading: boolean;
     downloadProgress: number;
@@ -65,18 +80,31 @@ export interface IFilm {
 
 
 export async function getMovies(q?: string): Promise<IFilm[]> {
-    return await api<IFilm[]>('movies', {query: q})
+    const formData = new FormData();
+    formData.append('query', q);
+
+    return await api<IFilm[]>('http://localhost:52918/api/TMDB/', formData)
 }
 
 
 async function api<T>(url: string, data: any): Promise<T> {
-    const request = await fetch(`${API}${url}`);
-    if(request.ok) {
-        const response = await request.json();
-        return response as T;
+    try {
+        const request = await fetch(url, {
+            headers: { 'Accept-Encoding': 'gzip, deflate, br' },
+            method: "POST",
+            body: data
+        });
+        if (request.ok) {
+            const response = await request.json();
+            return response as T;
+        }
+        else {
+            throw new Error(request.statusText)
+        }
     }
-    else {
-        throw new Error(request.statusText)
+    catch (err) {
+        console.log(err);
+        throw err;
     }
 }
 

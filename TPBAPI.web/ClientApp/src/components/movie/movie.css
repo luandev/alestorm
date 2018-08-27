@@ -9,7 +9,7 @@
 
 .movie-bg {
     display: block;
-    height: calc(100px + 14VW);
+    height: calc(100px + 50VW);
     background-repeat: no-repeat;
     background-size: cover;
     width: calc(100% - 10px);

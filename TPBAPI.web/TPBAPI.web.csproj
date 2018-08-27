@@ -15,6 +15,7 @@
     <PackageReference Include="Hangfire" Version="1.6.20" />
     <PackageReference Include="Hangfire.Console" Version="1.4.1" />
     <PackageReference Include="Hangfire.Mongo" Version="0.5.10" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
     <PackageReference Include="MongoDB.Driver" Version="2.7.0" />
     <PackageReference Include="Redouble.AspNet.Webpack" Version="2.3.0" />
     <PackageReference Include="System.Net.Torrent" Version="0.3.0" />
@@ -27,6 +28,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TMDbLib\TMDbLib\TMDbLib.csproj" />
     <ProjectReference Include="..\TPBAPI.api\TPBAPI.api.csproj" />
   </ItemGroup>
 
